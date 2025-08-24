@@ -13,11 +13,9 @@ import {
   Sun,
   Moon
 } from 'lucide-react';
-
 import { AppProvider } from './contexts/AppContext';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
-
 import { TimerDisplay } from './components/timer/TimerDisplay';
 import { TaskManager } from './components/tasks/TaskManager';
 import { StatisticsOverview } from './components/analytics/StatisticsOverview';
@@ -56,14 +54,12 @@ function AppContent() {
         return (
           <div className="space-y-8">
             <StatisticsOverview />
-            
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <ProductivityChart type="line" metric="sessions" period="daily" />
-              <ProductivityChart type="bar" metric="focusTime" period="daily" />
+              <ProductivityChart metric="sessions" period="daily" type="line" />
+              <ProductivityChart metric="focusTime" period="daily" type="bar" />
             </div>
-            
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <ProductivityChart type="line" metric="focusScore" period="weekly" />
+              <ProductivityChart metric="focusScore" period="weekly" type="line" />
               <ProductivityInsights />
             </div>
           </div>
@@ -128,7 +124,7 @@ function AppContent() {
       <div className="flex">
         {/* Sidebar */}
         <AnimatePresence>
-          {(isSidebarOpen || window.innerWidth >= 1024) && (
+          {(isSidebarOpen || (typeof window !== 'undefined' && window.innerWidth >= 1024)) && (
             <>
               {/* Mobile overlay */}
               {isSidebarOpen && (
@@ -207,11 +203,11 @@ function AppContent() {
       </div>
 
       {/* Keyboard Shortcuts Help */}
-      <div className={`fixed bottom-4 right-4 p-3 rounded-lg text-xs transition-colors ${
+      <div className={`fixed bottom-4 right-4 p-3 rounded-lg shadow-lg text-xs transition-colors ${
         settings.darkMode 
           ? 'bg-gray-800 text-gray-300 border border-gray-700' 
           : 'bg-white text-gray-600 border border-gray-200'
-      } shadow-lg`}>
+      }`}>
         <div className="space-y-1">
           <div>Space: Play/Pause</div>
           <div>Ctrl+R: Reset</div>
