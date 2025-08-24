@@ -30,7 +30,7 @@ function AppContent() {
   const [activeTab, setActiveTab] = useState<TabType>('timer');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { settings, toggleTheme } = useSettings();
-
+  
   useKeyboardShortcuts();
 
   const tabs = [
@@ -214,6 +214,11 @@ function AppContent() {
           <div>Ctrl+1/2/3: Start Work/Short/Long Break</div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer style={{textAlign: 'center', marginTop: '2rem', fontSize: '1rem', color: '#888'}}>
+        Developed by Gopi Gangatharan
+      </footer>
     </div>
   );
 }
