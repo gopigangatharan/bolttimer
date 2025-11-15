@@ -116,10 +116,12 @@ export function TaskManager() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-900">Tasks</h2>
-        <Button onClick={() => setIsModalOpen(true)}>
-          <Plus className="w-4 h-4 mr-2" />
-          Add Task
-        </Button>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Button onClick={() => setIsModalOpen(true)}>
+            <Plus className="w-4 h-4 mr-2" />
+            Add Task
+          </Button>
+        </motion.div>
       </div>
 
       {/* Active Tasks */}
@@ -137,13 +139,13 @@ export function TaskManager() {
             {activeTasks.map(task => (
               <motion.div
                 key={task.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, y: 50, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
                 layout
+                whileHover={{ y: -5, boxShadow: "0px 10px 20px rgba(0,0,0,0.1)" }}
               >
                 <Card 
-                  hover 
                   className={`cursor-pointer transition-all ${
                     state.currentTask?.id === task.id 
                       ? 'ring-2 ring-blue-500 bg-blue-50' 
@@ -154,15 +156,17 @@ export function TaskManager() {
                   <div className="flex items-center justify-between">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center space-x-3">
-                        <button
+                        <motion.button
                           onClick={(e) => {
                             e.stopPropagation();
                             toggleComplete(task);
                           }}
                           className="text-gray-400 hover:text-green-600 transition-colors"
+                          whileHover={{ scale: 1.2 }}
+                          whileTap={{ scale: 0.9 }}
                         >
                           <Circle className="w-5 h-5" />
-                        </button>
+                        </motion.button>
                         
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-gray-900 truncate">
@@ -193,17 +197,27 @@ export function TaskManager() {
                             animate={{
                               width: `${getCompletionPercentage(task.completedPomodoros, task.estimatedPomodoros)}%`
                             }}
-                            transition={{ duration: 0.5 }}
+                            transition={{ duration: 0.8, ease: "easeInOut" }}
                           />
                         </div>
                       </div>
                       
                       <div className="flex items-center justify-between mt-3">
                         <div className="flex items-center space-x-2">
-                          <span className={`px-2 py-1 text-xs font-medium rounded-full ${getPriorityColor(task.priority)}`}>
+                          <motion.span
+                            className={`px-2 py-1 text-xs font-medium rounded-full ${getPriorityColor(task.priority)}`}
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                          >
                             {task.priority}
-                          </span>
-                          <span className="text-xs text-gray-500">{task.category}</span>
+                          </motion.span>
+                          <motion.span
+                            className="text-xs text-gray-500"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                          >
+                            {task.category}
+                          </motion.span>
                         </div>
                         
                         <div className="flex items-center space-x-1">
@@ -254,14 +268,16 @@ export function TaskManager() {
             {completedTasks.slice(0, 5).map(task => (
               <motion.div
                 key={task.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 50, transition: { duration: 0.2 } }}
               >
                 <Card className="opacity-60">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <CheckCircle className="w-5 h-5 text-green-600" />
+                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1, transition: { delay: 0.2 } }}>
+                        <CheckCircle className="w-5 h-5 text-green-600" />
+                      </motion.div>
                       <div>
                         <h4 className="text-sm font-medium text-gray-900 line-through">
                           {task.title}

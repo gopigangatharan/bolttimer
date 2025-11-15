@@ -83,9 +83,10 @@ export function TimerDisplay() {
           
           <div className="absolute inset-0 flex items-center justify-center">
             <motion.div
-              key={state.timeRemaining}
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
+              key={state.timerState}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5, type: 'spring', stiffness: 260, damping: 20 }}
               className="text-center"
             >
               <div className="text-4xl font-mono font-bold text-gray-900">
@@ -102,57 +103,71 @@ export function TimerDisplay() {
         <div className="flex justify-center space-x-3">
           {state.timerState === 'idle' && (
             <>
-              <Button
-                onClick={() => startTimer('work')}
-                className="bg-red-600 hover:bg-red-700"
-              >
-                <Play className="w-4 h-4 mr-2" />
-                Start Work
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => startTimer('shortBreak')}
-              >
-                <SkipForward className="w-4 h-4 mr-2" />
-                Short Break
-              </Button>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  onClick={() => startTimer('work')}
+                  className="bg-red-600 hover:bg-red-700"
+                >
+                  <Play className="w-4 h-4 mr-2" />
+                  Start Work
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  variant="outline"
+                  onClick={() => startTimer('shortBreak')}
+                >
+                  <SkipForward className="w-4 h-4 mr-2" />
+                  Short Break
+                </Button>
+              </motion.div>
             </>
           )}
           
           {state.timerState === 'running' && (
             <>
-              <Button onClick={pauseTimer} variant="secondary">
-                <Pause className="w-4 h-4 mr-2" />
-                Pause
-              </Button>
-              <Button onClick={stopTimer} variant="outline">
-                <Square className="w-4 h-4 mr-2" />
-                Stop
-              </Button>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button onClick={pauseTimer} variant="secondary">
+                  <Pause className="w-4 h-4 mr-2" />
+                  Pause
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button onClick={stopTimer} variant="outline">
+                  <Square className="w-4 h-4 mr-2" />
+                  Stop
+                </Button>
+              </motion.div>
             </>
           )}
           
           {state.timerState === 'paused' && (
             <>
-              <Button onClick={resumeTimer} className="bg-green-600 hover:bg-green-700">
-                <Play className="w-4 h-4 mr-2" />
-                Resume
-              </Button>
-              <Button onClick={stopTimer} variant="outline">
-                <Square className="w-4 h-4 mr-2" />
-                Stop
-              </Button>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button onClick={resumeTimer} className="bg-green-600 hover:bg-green-700">
+                  <Play className="w-4 h-4 mr-2" />
+                  Resume
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button onClick={stopTimer} variant="outline">
+                  <Square className="w-4 h-4 mr-2" />
+                  Stop
+                </Button>
+              </motion.div>
             </>
           )}
           
           {state.timerState === 'completed' && (
-            <Button
-              onClick={() => startTimer('work')}
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              <Play className="w-4 h-4 mr-2" />
-              Start Next Session
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                onClick={() => startTimer('work')}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                <Play className="w-4 h-4 mr-2" />
+                Start Next Session
+              </Button>
+            </motion.div>
           )}
         </div>
 
