@@ -1,3 +1,4 @@
+import Soundscapes from "./components/timer/Soundscapes";
 /**
  * Main application component with navigation and routing
  */
@@ -46,6 +47,9 @@ function AppContent() {
         return (
           <div className="max-w-md mx-auto">
             <TimerDisplay />
+            <div className='sound-container'>
+              <Soundscapes />
+            </div>
           </div>
         );
       case 'tasks':
